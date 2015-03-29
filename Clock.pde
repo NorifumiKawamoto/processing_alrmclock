@@ -1,0 +1,46 @@
+class Clock extends Thread
+{
+  private color mColor;
+  private int mTextSize;
+  private PVector mPos;
+  private ClockTime mClockTime;
+  
+  Clock()
+  {
+    mClockTime = new ClockTime();
+    mColor = color(50, 55, 100);
+    mTextSize= 30;
+    mPos = new PVector(130,200);
+  }
+  public synchronized void run()
+  {
+    for (;; ) {
+      try {
+        mClockTime.setTime(hour(), minute(), second());
+        Thread.sleep(1000);
+      } 
+      catch(InterruptedException e) {
+        print(e);
+      } 
+      finally {
+      }
+    }
+  }
+  
+  public void draw()
+  {
+      textSize(this.mTextSize);
+      fill(this.mColor);
+      text( this.now(), mPos.x, mPos.y);
+  }
+
+  public String toString()
+  {
+    return mClockTime.toString();
+  }
+
+  public String now()
+  {
+    return this.toString();
+  }
+}
