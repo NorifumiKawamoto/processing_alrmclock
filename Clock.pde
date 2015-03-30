@@ -1,9 +1,9 @@
 class Clock extends Thread
 {
-  private color mColor;
-  private int mTextSize;
-  private PVector mPos;
-  private ClockTime mClockTime;
+  protected color mColor;
+  protected int mTextSize;
+  protected PVector mPos;
+  protected ClockTime mClockTime;
   
   Clock()
   {
