@@ -10,11 +10,11 @@ class Clock extends Thread
     mClockTime = new ClockTime();
     mColor = color(50, 55, 100);
     mTextSize= 30;
-    mPos = new PVector(130,200);
+    mPos = new PVector(130, 200);
   }
   public synchronized void run()
   {
-    for (;; ) {
+    for (;;) {
       try {
         mClockTime.setTime(hour(), minute(), second());
         Thread.sleep(1000);
@@ -25,6 +25,11 @@ class Clock extends Thread
       finally {
       }
     }
+  }
+  
+  public void setColor(color c)
+  {
+    this.mColor = c;
   }
   
   public void draw()
