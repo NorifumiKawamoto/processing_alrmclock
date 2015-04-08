@@ -6,7 +6,7 @@ class AlarmClock extends Clock
   private boolean mAlart=false;
   private SoundFile mSoundFile;
   private boolean mSoundStart=false;
-  
+
   private boolean mSkipFlag=false;
   AlarmClock() {
     super();
@@ -27,40 +27,46 @@ class AlarmClock extends Clock
   void setAlartTime(final int hour, final int minute, final int second)
   {
     this.mAlartTime.setTime(hour, minute, second);
-    
+
     if (this.mAlartTime.time() < this.mClockTime.time())
     {
       this.mSkipFlag=true;
+    } else {
+      this.mSkipFlag=false;
     }
   }
 
   void draw()
   {
     super.draw();
-    
+
+    textSize(20);
+    fill(color(255, 255, 255));
+    text("hour: a:- d:+  minute: w:+ s:-", 50, 50);
+
     if (this.mClockTime.time()==0) {
-       this.mSkipFlag = false;
+      this.mSkipFlag = false;
     }
-    
-    if (this.mAlart){
+
+    if (this.mAlart) {
       if (this.mAlartTime.time() < this.mClockTime.time() && !this.mSkipFlag) {
         textSize(this.mTextSize);
         fill(this.mAlartColor);
-        text( "@Alart", mPos.x , mPos.y - 50);
+        text( "@Alart", mPos.x, mPos.y - 50);
 
-        if (!this.mSoundStart){
+        if (!this.mSoundStart) {
           mSoundFile.play();
           this.mSoundStart =true;
         }
       }
-      
+
       textSize(this.mTextSize);
       fill(this.mColor);
-      text ("Alart " + this.alartTime(),mPos.x - 50, mPos.y + 50);
+      text ("Alart " + this.alartTime(), mPos.x - 50, mPos.y + 50);
     }
   }
-  
-   public String alartTime()
+
+  public String alartTime()
   {
     return this.mAlartTime.toString();
   }
