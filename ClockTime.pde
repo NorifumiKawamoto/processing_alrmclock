@@ -10,8 +10,8 @@ class ClockTime
     this.setMinute(minute());
     this.setSecond(second());
   }
-  
-    ClockTime(final int hour, final int minute, final int second)
+
+  ClockTime(final int hour, final int minute, final int second)
   {
     this.setHour(hour);
     this.setMinute(minute);
@@ -44,7 +44,7 @@ class ClockTime
   {
     this.mSecond = sec;
   }
-  
+
   public int time()
   {
     return (this.mHour * 60 * 60 + this.mMinute*60 + this.mSecond);

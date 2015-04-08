@@ -4,7 +4,7 @@ class Clock extends Thread
   protected int mTextSize;
   protected PVector mPos;
   protected ClockTime mClockTime;
-  
+
   Clock()
   {
     mClockTime = new ClockTime();
@@ -14,7 +14,7 @@ class Clock extends Thread
   }
   public synchronized void run()
   {
-    for (;;) {
+    for (;; ) {
       try {
         mClockTime.setTime(hour(), minute(), second());
         Thread.sleep(1000);
@@ -26,17 +26,17 @@ class Clock extends Thread
       }
     }
   }
-  
+
   public void setColor(color c)
   {
     this.mColor = c;
   }
-  
+
   public void draw()
   {
-      textSize(this.mTextSize);
-      fill(this.mColor);
-      text( this.now(), mPos.x, mPos.y);
+    textSize(this.mTextSize);
+    fill(this.mColor);
+    text( this.now(), mPos.x, mPos.y);
   }
 
   public String toString()
