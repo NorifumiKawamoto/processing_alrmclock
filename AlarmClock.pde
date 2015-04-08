@@ -6,6 +6,8 @@ class AlarmClock extends Clock
   private boolean mAlart=false;
   private SoundFile mSoundFile;
   private boolean mSoundStart=false;
+  
+  private boolean mSkipFlag=false;
   AlarmClock() {
     super();
     mAlartTime = new ClockTime();
@@ -25,22 +27,28 @@ class AlarmClock extends Clock
   void setAlartTime(final int hour, final int minute, final int second)
   {
     this.mAlartTime.setTime(hour, minute, second);
+    
+    if (this.mAlartTime.time() < this.mClockTime.time())
+    {
+      this.mSkipFlag=true;
+    }
   }
 
   void draw()
   {
     super.draw();
-
-    if (this.mAlart)
-    {
-      if (this.mAlartTime.time() < this.mClockTime.time())
-      {
+    
+    if (this.mClockTime.time()==0) {
+       this.mSkipFlag = false;
+    }
+    
+    if (this.mAlart){
+      if (this.mAlartTime.time() < this.mClockTime.time() && !this.mSkipFlag) {
         textSize(this.mTextSize);
         fill(this.mAlartColor);
         text( "@Alart", mPos.x , mPos.y - 50);
 
-        if (!this.mSoundStart)
-        {
+        if (!this.mSoundStart){
           mSoundFile.play();
           this.mSoundStart =true;
         }
@@ -49,7 +57,7 @@ class AlarmClock extends Clock
       textSize(this.mTextSize);
       fill(this.mColor);
       text ("Alart " + this.alartTime(),mPos.x - 50, mPos.y + 50);
-    } 
+    }
   }
   
    public String alartTime()
