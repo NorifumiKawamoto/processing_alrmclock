@@ -10,7 +10,7 @@ void setup()
   clock.setColor(color(255, 255, 255));
   clock.setSoundFile(new SoundFile(this, "n99.mp3"));
   clock.start();
-  clock.setAlartTime(2, 05, 0);
+  clock.setAlartTime(6, 00, 0);
   clock.setTimer();
   size(400, 400);
 }
