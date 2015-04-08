@@ -35,10 +35,9 @@ class AlarmClock extends Clock
     {
       if (this.mAlartTime.time() < this.mClockTime.time())
       {
-        clear();
         textSize(this.mTextSize);
         fill(this.mAlartColor);
-        text( "@Alart", mPos.x, mPos.y);
+        text( "@Alart", mPos.x , mPos.y - 50);
 
         if (!this.mSoundStart)
         {
@@ -46,6 +45,15 @@ class AlarmClock extends Clock
           this.mSoundStart =true;
         }
       }
-    }
+      
+      textSize(this.mTextSize);
+      fill(this.mColor);
+      text ("Alart " + this.alartTime(),mPos.x - 50, mPos.y + 50);
+    } 
+  }
+  
+   public String alartTime()
+  {
+    return this.mAlartTime.toString();
   }
 }
