@@ -1,8 +1,7 @@
 import processing.sound.*;
-
 // sound  http://www.hmix.net/
 SoundFile file;
-
+PImage icon;
 AlarmClock clock = new AlarmClock();
 
 int hour = 6;
@@ -10,6 +9,9 @@ int minute = 0;
 
 void setup()
 {
+  icon = loadImage("icon.png","png");
+  frame.setIconImage((Image)icon.getImage());
+  frame.setTitle("Alarm");
   clock.setColor(color(255, 255, 255));
   clock.setSoundFile(new SoundFile(this, "n99.mp3"));
   clock.start();
@@ -48,6 +50,5 @@ void keyPressed()
     minute = (minute<0)? 59:minute;
     break;
   }
-
   clock.setAlartTime(hour, minute, 0);
 }
