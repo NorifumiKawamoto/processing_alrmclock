@@ -5,20 +5,39 @@ class AlarmClock extends Clock
   private color mAlartColor;
   private boolean mAlart=false;
   private SoundFile mSoundFile;
+  private String mFileName;
   private boolean mSoundStart=false;
 
   private boolean mSkipFlag=false;
+  private PFont mTitleFont;
+  private PFont mFont;
+  private boolean mInit=false;
+  
   AlarmClock() {
     super();
     mAlartTime = new ClockTime();
     mAlartColor = color(255, 0, 0);
   }
-
-  void setSoundFile(SoundFile file)
+  
+  void fontset()
+  {
+    mFont = createFont("Times-Roman", 32);
+    if (mFont != null) textFont(mFont);
+    
+    mInit = true;
+  }
+  
+  void setSoundFile(SoundFile file,String fileName)
   {
     mSoundFile = file;
+    mFileName = fileName;
   }
 
+  void setTitleFont(PFont font)
+  {
+    mTitleFont = font;
+  }
+  
   void setTimer()
   {
     this.mAlart =true;
@@ -30,24 +49,31 @@ class AlarmClock extends Clock
 
     if (this.mAlartTime.time() < this.mClockTime.time())
     {
-      this.mSkipFlag=true;
+      this.mSkipFlag = true;
     } else {
-      this.mSkipFlag=false;
+      this.mSkipFlag = false;
     }
   }
-
+  
   void draw()
   {
+    if (mInit==false) fontset();
+    
     super.draw();
-
     textSize(20);
     fill(color(255, 255, 255));
     text("hour: a:- d:+  minute: w:+ s:-", 50, 50);
-
-    if (this.mClockTime.time()==0) {
+    if (mFileName != null) {
+      if ( mFont != null) {
+        textFont(mTitleFont);
+        textSize(12);
+        text("Sound:" + mFileName,50,80);
+        textFont(mFont);
+      }
+    }
+    if (this.mClockTime.time() == 0) {
       this.mSkipFlag = false;
     }
-
     if (this.mAlart) {
       if (this.mAlartTime.time() < this.mClockTime.time() && !this.mSkipFlag) {
         textSize(this.mTextSize);

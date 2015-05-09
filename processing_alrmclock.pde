@@ -8,20 +8,44 @@ AlarmClock clock = new AlarmClock();
 int hour = 6;
 int minute = 0;
 
+String musicFilePath;
+String musicFileName;
+
 void setup()
 {
+  selectInput("Select Alart File", "fileSelected");
+    size(400, 400);
+}
+
+void clocksetup()
+{
   clock.setColor(color(255, 255, 255));
-  clock.setSoundFile(new SoundFile(this, "n99.mp3"));
+  clock.setTitleFont(loadFont("Serif-32.vlw"));
+  clock.setSoundFile(new SoundFile(this, musicFilePath), musicFileName);
   clock.start();
   clock.setAlartTime(hour, minute, 0);
   clock.setTimer();
-  size(400, 400);
+
 }
 
 void draw()
 {
   clear();
   clock.draw();
+}
+
+void fileSelected(File selection) 
+{
+  if (selection == null) {
+    println("Default Music");
+    musicFilePath ="n99.mp3";
+    musicFileName = musicFilePath;
+  } else {
+    musicFilePath =selection.getAbsolutePath();
+    musicFileName = selection.getName();
+    println("select " + musicFilePath);
+  }
+  clocksetup();
 }
 
 void keyPressed()
@@ -51,3 +75,4 @@ void keyPressed()
 
   clock.setAlartTime(hour, minute, 0);
 }
+
