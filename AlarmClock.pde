@@ -12,32 +12,34 @@ class AlarmClock extends Clock
   private PFont mTitleFont;
   private PFont mFont;
   private boolean mInit=false;
-  
+
   AlarmClock() {
     super();
-    mAlartTime = new ClockTime();
-    mAlartColor = color(255, 0, 0);
+    this.mAlartTime = new ClockTime();
+    this.mAlartColor = color(255, 0, 0);
   }
-  
+
   void fontset()
   {
-    mFont = createFont("Times-Roman", 32);
-    if (mFont != null) textFont(mFont);
-    
+    this.mFont = createFont("Times-Roman", 32);
+    if (this.mFont != null) textFont(this.mFont);
+
     mInit = true;
   }
-  
-  void setSoundFile(SoundFile file,String fileName)
+
+  void setSoundFile(SoundFile file, String fileName)
   {
-    mSoundFile = file;
-    mFileName = fileName;
+    if (this.mSoundFile!=null) this.mSoundFile.stop();
+    this.mSoundFile = file;
+    this.mFileName = fileName;
+    this.mSoundStart =false;
   }
 
   void setTitleFont(PFont font)
   {
-    mTitleFont = font;
+    this.mTitleFont = font;
   }
-  
+
   void setTimer()
   {
     this.mAlart =true;
@@ -54,42 +56,55 @@ class AlarmClock extends Clock
       this.mSkipFlag = false;
     }
   }
-  
+
   void draw()
   {
-    if (mInit==false) fontset();
-    
+    if (this.mInit==false) fontset();
+
     super.draw();
-    textSize(20);
-    fill(color(255, 255, 255));
-    text("hour: a:- d:+  minute: w:+ s:-", 50, 50);
-    if (mFileName != null) {
-      if ( mFont != null) {
-        textFont(mTitleFont);
-        textSize(12);
-        text("Sound:" + mFileName,50,80);
-        textFont(mFont);
+    if (this.mFileName != null) {
+      if ( this.mTitleFont != null) {
+        textFont(this.mTitleFont);
       }
+        textSize(12);
+        text("Sound:" + this.mFileName, 50, 100);
+        textFont(mFont);
     }
     if (this.mClockTime.time() == 0) {
       this.mSkipFlag = false;
     }
     if (this.mAlart) {
-      if (this.mAlartTime.time() < this.mClockTime.time() && !this.mSkipFlag) {
-        textSize(this.mTextSize);
-        fill(this.mAlartColor);
-        text( "@Alart", mPos.x, mPos.y - 50);
-
-        if (!this.mSoundStart) {
-          mSoundFile.play();
-          this.mSoundStart =true;
-        }
-      }
-
-      textSize(this.mTextSize);
-      fill(this.mColor);
-      text ("Alart " + this.alartTime(), mPos.x - 50, mPos.y + 50);
+      drawAlart();
     }
+  }
+  
+  void forcePlayMusic()
+  {
+    this.mSoundFile.stop();
+    this.mSoundStart = false;
+    playMusic();
+    this.mSoundStart = false;
+  }
+  
+  void playMusic()
+  {
+     if (!this.mSoundStart) {
+        this.mSoundFile.play();
+        this.mSoundStart =true;
+      }
+  }
+
+  void drawAlart()
+  {
+    if (this.mAlartTime.time() < this.mClockTime.time() && !this.mSkipFlag) {
+      textSize(this.mTextSize);
+      fill(this.mAlartColor);
+      text( "@Alart", this.mPos.x, this.mPos.y - 50);
+      playMusic();
+    }
+    textSize(this.mTextSize);
+    fill(this.mColor);
+    text ("Alart " + this.alartTime(), this.mPos.x - 50, this.mPos.y + 50);
   }
 
   public String alartTime()
@@ -97,3 +112,4 @@ class AlarmClock extends Clock
     return this.mAlartTime.toString();
   }
 }
+

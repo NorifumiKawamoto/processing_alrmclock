@@ -1,7 +1,6 @@
+//https://processing.org/reference/libraries/sound/SoundFile.html
 import processing.sound.*;
 
-// sound  http://www.hmix.net/
-SoundFile file;
 
 AlarmClock clock = new AlarmClock();
 
@@ -13,15 +12,14 @@ String musicFileName;
 
 void setup()
 {
-  selectInput("Select Alart File", "fileSelected");
     size(400, 400);
+    clocksetup();
 }
 
 void clocksetup()
 {
   clock.setColor(color(255, 255, 255));
   clock.setTitleFont(loadFont("Serif-32.vlw"));
-  clock.setSoundFile(new SoundFile(this, musicFilePath), musicFileName);
   clock.start();
   clock.setAlartTime(hour, minute, 0);
   clock.setTimer();
@@ -31,6 +29,11 @@ void clocksetup()
 void draw()
 {
   clear();
+  textSize(20);
+  fill(color(255, 255, 255));
+  text("hour: a:- d:+  minute: w:+ s:-", 50, 30);
+  text("music: m play:p ",50,60);
+    
   clock.draw();
 }
 
@@ -45,7 +48,7 @@ void fileSelected(File selection)
     musicFileName = selection.getName();
     println("select " + musicFilePath);
   }
-  clocksetup();
+  clock.setSoundFile(new SoundFile(this, musicFilePath), musicFileName);
 }
 
 void keyPressed()
@@ -70,6 +73,12 @@ void keyPressed()
   case 's':
     minute--;
     minute = (minute<0)? 59:minute;
+    break;
+  case 'm':
+    selectInput("Select Alart File", "fileSelected");
+    break;
+  case 'p':
+    clock.forcePlayMusic();
     break;
   }
 
